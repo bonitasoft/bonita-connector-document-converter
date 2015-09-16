@@ -51,15 +51,4 @@ public class DocToPDFConverterTest {
         assertThat(output).exists();
     }
 
-    @Test
-    public void should_convert_doc_to_pdf() throws Exception {
-        final DocToPDFConverter docxToPDFConverter = new DocToPDFConverter();
-
-        final File output = tmpFileRule.newFile("output.pdf");
-
-        docxToPDFConverter.convert(DocToPDFConverterTest.class.getResourceAsStream("/docTest.doc"), output.getAbsolutePath());
-
-        assertThat(output).exists();
-    }
-
 }
