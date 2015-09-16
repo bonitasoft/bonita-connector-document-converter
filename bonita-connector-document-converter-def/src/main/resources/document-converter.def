@@ -17,7 +17,6 @@
 		<widget id="outputFormat" inputName="outputFormat" xsi:type="definition:Select" readOnly="true">
 			<items>PDF</items>
 			<items>HTML</items>
-			<items>XML</items
 		</widget>
 		<widget id="outputFileName" inputName="outputFileName" xsi:type="definition:Text" />
 	</page>
