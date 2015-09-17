@@ -5,8 +5,9 @@
         <groupId>org.bonitasoft.connectors</groupId>
         <version>1.0.0</version>
     </parent>
-    
+
     <artifactId>bonita-connector-document-converter</artifactId>
+    <version>0.0.1</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -14,9 +15,9 @@
     </properties>
 
     <modules>
-		<module>bonita-connector-document-converter-def</module>
-		<module>bonita-connector-document-converter-impl</module>
-	</modules>
+        <module>bonita-connector-document-converter-def</module>
+        <module>bonita-connector-document-converter-impl</module>
+    </modules>
 
     <dependencies>
         <dependency>
@@ -32,12 +33,17 @@
     <build>
         <plugins>
             <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
 
-   
-    <version>0.0.1-SNAPSHOT</version>
 </project>

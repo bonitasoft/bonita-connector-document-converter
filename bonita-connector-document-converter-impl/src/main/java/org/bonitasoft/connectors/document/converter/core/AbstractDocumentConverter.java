@@ -5,23 +5,20 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.bonitasoft.connectors.document.converter;
+package org.bonitasoft.connectors.document.converter.core;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Objects;
+
+import org.apache.commons.io.output.ByteArrayOutputStream;
 
 import fr.opensagres.xdocreport.converter.ConverterTypeTo;
 import fr.opensagres.xdocreport.converter.ConverterTypeVia;
@@ -33,19 +30,31 @@ import fr.opensagres.xdocreport.document.registry.XDocReportRegistry;
 import fr.opensagres.xdocreport.template.IContext;
 import fr.opensagres.xdocreport.template.TemplateEngineKind;
 
-public class DocToPDFConverter {
+public abstract class AbstractDocumentConverter implements DocumentConverter {
 
-    public void convert(InputStream sourceFile, String outputFile) throws IOException, XDocReportException {
-        final IXDocReport report = XDocReportRegistry.getRegistry().loadReport(
-                sourceFile, TemplateEngineKind.Velocity);
+    private final InputStream inputStream;
 
-        final IContext context = report.createContext();
-        final OutputStream out = new FileOutputStream(new File(outputFile));
-
-        report.convert(context, Options.getTo(ConverterTypeTo.PDF).via(converterImplementation(report)), out);
+    public AbstractDocumentConverter(final InputStream inputStream) {
+        if (inputStream == null) {
+            throw new IllegalArgumentException("Source document InputStream cannot be null");
+        }
+        this.inputStream = inputStream;
     }
 
-    private ConverterTypeVia converterImplementation(IXDocReport report) {
+    @Override
+    public byte[] convert() throws IOException, XDocReportException {
+        final IXDocReport report = XDocReportRegistry.getRegistry().loadReport(
+                inputStream, TemplateEngineKind.Velocity);
+        final IContext context = report.createContext();
+        try (final ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            report.convert(context, Options.getTo(getOutputType()).via(converterImplementation(report)), out);
+            return out.toByteArray();
+        }
+    }
+
+    protected abstract ConverterTypeTo getOutputType();
+
+    private ConverterTypeVia converterImplementation(final IXDocReport report) {
         return Objects.equals(report.getKind(), DocumentKind.ODT.name()) ? ConverterTypeVia.ODFDOM : ConverterTypeVia.XWPF;
     }
 

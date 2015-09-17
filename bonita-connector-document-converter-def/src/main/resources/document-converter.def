@@ -8,7 +8,7 @@
 
 	<input name="sourceDocument" type="java.lang.String" mandatory="true" />
 	<input name="outputFormat" type="java.lang.String" />
-	<input name="outputFileName" type="java.lang.String" />
+	<input name="outputFileName" type="java.lang.String" defaultValue="myDocument.pdf" />
 	
 	<output name="ouptutDocumentValue" type="org.bonitasoft.engine.bpm.document.DocumentValue" />
 	
@@ -16,7 +16,7 @@
 		<widget id="sourceDocument" inputName="sourceDocument" xsi:type="definition:Text" showDocuments="true" />
 		<widget id="outputFormat" inputName="outputFormat" xsi:type="definition:Select" readOnly="true">
 			<items>PDF</items>
-			<items>HTML</items>
+			<items>XHTML</items>
 		</widget>
 		<widget id="outputFileName" inputName="outputFileName" xsi:type="definition:Text" />
 	</page>
