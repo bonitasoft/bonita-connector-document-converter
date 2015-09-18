@@ -2,9 +2,11 @@
 <definition:ConnectorDefinition xmlns:definition="http://www.bonitasoft.org/ns/connector/definition/6.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<id>document-converter</id>
 	<version>$definition.version$</version>
-	<icon>converter.png</icon>
+	<icon>pdf.png</icon>
 
-	<category id="publishing" icon="publishing.png" />
+
+	<category id="reporting" icon="Reporting.png"/>
+	<category id="office" icon="office.png" parentCategoryId="reporting" />
 
 	<input name="sourceDocument" type="java.lang.String" mandatory="true" />
 	<input name="outputFormat" type="java.lang.String" />
