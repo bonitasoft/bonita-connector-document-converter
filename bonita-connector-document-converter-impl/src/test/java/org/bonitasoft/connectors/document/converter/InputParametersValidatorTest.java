@@ -19,8 +19,10 @@ import static org.assertj.core.api.Assertions.entry;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.assertj.core.data.MapEntry;
 import org.bonitasoft.engine.connector.ConnectorValidationException;
+import org.junit.Assume;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -80,6 +82,7 @@ public class InputParametersValidatorTest {
 
     @Test
     public void should_throw_a_ConnectorValidationException_if_outputFileName_is_set_and_not_a_valid_filename() throws Exception {
+        Assume.assumeTrue(SystemUtils.IS_OS_WINDOWS);
         final InputParametersValidator validator = new InputParametersValidator(
                 aMap(entry("sourceDocument", "aDocumentName"), entry("outputFileName", "aInvalidFileName?")));
 
