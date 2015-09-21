@@ -55,7 +55,8 @@ public abstract class AbstractDocumentConverter implements DocumentConverter {
     protected abstract ConverterTypeTo getOutputType();
 
     private ConverterTypeVia converterImplementation(final IXDocReport report) {
-        return Objects.equals(report.getKind(), DocumentKind.ODT.name()) ? ConverterTypeVia.ODFDOM : ConverterTypeVia.XWPF;
+        return Objects.equals(report.getKind(), DocumentKind.ODT.name()) ? ConverterTypeVia.ODFDOM : converterTypeForDocx();
     }
 
+    protected abstract ConverterTypeVia converterTypeForDocx();
 }

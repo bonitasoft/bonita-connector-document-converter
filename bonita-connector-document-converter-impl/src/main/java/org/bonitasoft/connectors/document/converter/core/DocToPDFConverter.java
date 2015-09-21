@@ -17,6 +17,7 @@ package org.bonitasoft.connectors.document.converter.core;
 import java.io.InputStream;
 
 import fr.opensagres.xdocreport.converter.ConverterTypeTo;
+import fr.opensagres.xdocreport.converter.ConverterTypeVia;
 
 public class DocToPDFConverter extends AbstractDocumentConverter {
 
@@ -29,4 +30,8 @@ public class DocToPDFConverter extends AbstractDocumentConverter {
         return ConverterTypeTo.PDF;
     }
 
+    @Override
+    protected ConverterTypeVia converterTypeForDocx() {
+        return ConverterTypeVia.XWPF;
+    }
 }

@@ -17,6 +17,7 @@ package org.bonitasoft.connectors.document.converter.core;
 import java.io.InputStream;
 
 import fr.opensagres.xdocreport.converter.ConverterTypeTo;
+import fr.opensagres.xdocreport.converter.ConverterTypeVia;
 
 public class DocToHTMLConverter extends AbstractDocumentConverter {
 
@@ -27,6 +28,15 @@ public class DocToHTMLConverter extends AbstractDocumentConverter {
     @Override
     protected ConverterTypeTo getOutputType() {
         return ConverterTypeTo.XHTML;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.bonitasoft.connectors.document.converter.core.AbstractDocumentConverter#converterTypeForDocx()
+     */
+    @Override
+    protected ConverterTypeVia converterTypeForDocx() {
+        return ConverterTypeVia.XWPF;
     }
 
 }
