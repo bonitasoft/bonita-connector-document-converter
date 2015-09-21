@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <artifactId>bonita-connector-document-converter-def</artifactId>
-            <groupId>org.bonitasoft.connectors</groupId>
+            <groupId>${project.groupId}</groupId>
             <version>${definition.version}</version>
         </dependency>
         <dependency>
