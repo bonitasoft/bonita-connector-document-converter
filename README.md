@@ -11,4 +11,4 @@ Rendering issues:
 * Exponents
 * Indexes
 * Hightlights
-* Font support for other than western encoding
+* Asian fonts support need a specific iText jar with a not compliant license
