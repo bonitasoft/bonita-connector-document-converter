@@ -34,7 +34,9 @@ import fr.opensagres.xdocreport.core.XDocReportException;
 
 public class DocumentConverterConnector extends AbstractConnector {
 
+    private static final String DEFAULT_ENCODING = "utf-8";
     static final String SOURCE_DOCUMENT = "sourceDocument";
+    static final String ENCODING = "encoding";
     static final String OUTPUT_FORMAT = "outputFormat";
     static final String OUTPUT_FILE_NAME = "outputFileName";
     static final String OUTPUT_DOCUMENT_VALUE = "ouptutDocumentValue";
@@ -62,7 +64,7 @@ public class DocumentConverterConnector extends AbstractConnector {
             final Document document = processAPI.getLastDocument(processInstanceId, getSourceDocumentReference());
             final byte[] content = processAPI.getDocumentContent(document.getContentStorageId());
             is = new ByteArrayInputStream(content);
-            final DocumentConverter converter = documentConverterFactory.newConverter(is, getOutputFormat());
+            final DocumentConverter converter = documentConverterFactory.newConverter(is, getOutputFormat(), getEncoding());
             setOutputParameter(OUTPUT_DOCUMENT_VALUE,
                     createDocumentValue(converter.convert(),
                             MimeTypeUtil.forFormat(getOutputFormat()),
@@ -88,6 +90,10 @@ public class DocumentConverterConnector extends AbstractConnector {
         return (String) getInputParameter(OUTPUT_FORMAT, ConverterTypeTo.PDF.name());
     }
 
+    private String getEncoding() {
+        return (String) getInputParameter(ENCODING, DEFAULT_ENCODING);
+    }
+
     private DocumentValue createDocumentValue(final byte[] content, final String mimeType, final String outputFileName) {
         return new DocumentValue(content, mimeType, outputFileName);
     }
@@ -106,6 +112,7 @@ public class DocumentConverterConnector extends AbstractConnector {
         inputParameters.put(OUTPUT_FILE_NAME, getInputParameter(OUTPUT_FILE_NAME));
         inputParameters.put(SOURCE_DOCUMENT, getInputParameter(SOURCE_DOCUMENT));
         inputParameters.put(OUTPUT_FORMAT, getInputParameter(OUTPUT_FORMAT));
+        inputParameters.put(ENCODING, getInputParameter(ENCODING));
         return inputParameters;
     }
 

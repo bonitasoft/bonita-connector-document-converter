@@ -23,7 +23,7 @@ public class DocToPDFConverterTest {
 
     @Test
     public void should_convert_docx_to_pdf() throws Exception {
-        final DocToPDFConverter docxToPDFConverter = new DocToPDFConverter(DocToPDFConverterTest.class.getResourceAsStream("/patern-signets.docx"));
+        final DocToPDFConverter docxToPDFConverter = new DocToPDFConverter(DocToPDFConverterTest.class.getResourceAsStream("/patern-signets.docx"), "utf-8");
 
         final byte[] content = docxToPDFConverter.convert();
 
@@ -32,7 +32,7 @@ public class DocToPDFConverterTest {
 
     @Test
     public void should_convert_odt_to_pdf() throws Exception {
-        final DocToPDFConverter docxToPDFConverter = new DocToPDFConverter(DocToPDFConverterTest.class.getResourceAsStream("/odtTest.odt"));
+        final DocToPDFConverter docxToPDFConverter = new DocToPDFConverter(DocToPDFConverterTest.class.getResourceAsStream("/odtTest.odt"), "utf-8");
 
         final byte[] content = docxToPDFConverter.convert();
 

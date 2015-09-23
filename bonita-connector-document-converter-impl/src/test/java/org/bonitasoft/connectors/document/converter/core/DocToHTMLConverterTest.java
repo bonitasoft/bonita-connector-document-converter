@@ -31,12 +31,12 @@ public class DocToHTMLConverterTest {
     public void should_throw_an_IllegalArgumentException_if_inputStream_is_null() throws Exception {
         expectedException.expect(IllegalArgumentException.class);
 
-        new DocToHTMLConverter(null);
+        new DocToHTMLConverter(null, "utf-8");
     }
 
     @Test
     public void should_convert_docx_to_xhtml() throws Exception {
-        final DocToHTMLConverter converter = new DocToHTMLConverter(DocToPDFConverterTest.class.getResourceAsStream("/patern-signets.docx"));
+        final DocToHTMLConverter converter = new DocToHTMLConverter(DocToPDFConverterTest.class.getResourceAsStream("/patern-signets.docx"), "utf-8");
 
         final byte[] content = converter.convert();
 
@@ -45,7 +45,7 @@ public class DocToHTMLConverterTest {
 
     @Test
     public void should_convert_odt_to_xhtml() throws Exception {
-        final DocToHTMLConverter converter = new DocToHTMLConverter(DocToPDFConverterTest.class.getResourceAsStream("/odtTest.odt"));
+        final DocToHTMLConverter converter = new DocToHTMLConverter(DocToPDFConverterTest.class.getResourceAsStream("/odtTest.odt"), "utf-8");
 
         final byte[] content = converter.convert();
 

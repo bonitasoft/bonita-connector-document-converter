@@ -9,6 +9,7 @@
 	<category id="office" icon="office.png" parentCategoryId="reporting" />
 
 	<input name="sourceDocument" type="java.lang.String" mandatory="true" />
+	<input name="encoding" type="java.lang.String" defaultValue="windows-1252"/>
 	<input name="outputFormat" type="java.lang.String" />
 	<input name="outputFileName" type="java.lang.String" defaultValue="myDocument.pdf" />
 	
@@ -16,6 +17,7 @@
 	
 	<page id="configPage">
 		<widget id="sourceDocument" inputName="sourceDocument" xsi:type="definition:Text" showDocuments="true" />
+		<widget id="encoding" inputName="encoding" xsi:type="definition:Text" />
 		<widget id="outputFormat" inputName="outputFormat" xsi:type="definition:Select" readOnly="true">
 			<items>PDF</items>
 			<items>XHTML</items>

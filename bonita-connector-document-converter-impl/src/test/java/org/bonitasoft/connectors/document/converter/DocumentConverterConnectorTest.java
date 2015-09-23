@@ -85,7 +85,7 @@ public class DocumentConverterConnectorTest {
         document.setContentStorageId("TheStorageID");
         final byte[] content = new byte[] { 4, 5, 6 };
         final byte[] contentAfter = { 1, 2, 3 };
-        when(documentConverterFactory.newConverter(any(ByteArrayInputStream.class), anyString())).thenReturn(converter);
+        when(documentConverterFactory.newConverter(any(ByteArrayInputStream.class), anyString(), anyString())).thenReturn(converter);
         when(converter.convert()).thenReturn(contentAfter);
         doReturn(document).when(processAPI).getLastDocument(processInstanceId, "documentName");
         doReturn(content).when(processAPI).getDocumentContent("TheStorageID");
@@ -114,7 +114,7 @@ public class DocumentConverterConnectorTest {
         document.setContentStorageId("TheStorageID");
         final byte[] content = new byte[] { 4, 5, 6 };
         final byte[] contentAfter = { 1, 2, 3 };
-        when(documentConverterFactory.newConverter(any(ByteArrayInputStream.class), anyString())).thenReturn(converter);
+        when(documentConverterFactory.newConverter(any(ByteArrayInputStream.class), anyString(), anyString())).thenReturn(converter);
         when(converter.convert()).thenReturn(contentAfter);
         doReturn(document).when(processAPI).getLastDocument(processInstanceId, "documentName");
         doReturn(content).when(processAPI).getDocumentContent("TheStorageID");

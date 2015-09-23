@@ -29,6 +29,7 @@ public class InputParametersValidator {
         validateSourceDocumentInput();
         validateOutputFormatInput();
         validateOutputFileName();
+        validateEncoding();
     }
 
     private void validateSourceDocumentInput() throws ConnectorValidationException {
@@ -78,6 +79,19 @@ public class InputParametersValidator {
             throw new ConnectorValidationException(
                     String.format("Input paramater %s has an invalid value: %s. Allowed values are %s", DocumentConverterConnector.OUTPUT_FORMAT, outputFormat,
                             SUPPORTED_FORMATS));
+        }
+    }
+
+    private void validateEncoding() throws ConnectorValidationException {
+        final Object encoding = inputParameters.get(DocumentConverterConnector.ENCODING);
+        if (encoding != null && !(encoding instanceof String)) {
+            throw new ConnectorValidationException(
+                    String.format("Input paramater %s must be of type %s.", DocumentConverterConnector.OUTPUT_FILE_NAME, String.class.getName()));
+        }
+        if (encoding != null && !java.nio.charset.Charset.isSupported((String) encoding)) {
+            throw new ConnectorValidationException(
+                    String.format("Input paramater %s has an invalid value: %s is not a supported encoding.",
+                            DocumentConverterConnector.ENCODING, encoding));
         }
     }
 

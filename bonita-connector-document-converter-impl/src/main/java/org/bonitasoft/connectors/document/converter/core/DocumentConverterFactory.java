@@ -18,12 +18,12 @@ import java.io.ByteArrayInputStream;
 
 public class DocumentConverterFactory {
 
-    public DocumentConverter newConverter(final ByteArrayInputStream is, final String outputFormat) {
+    public DocumentConverter newConverter(final ByteArrayInputStream is, final String outputFormat, String encoding) {
         switch (outputFormat) {
             case "PDF":
-                return new DocToPDFConverter(is);
+                return new DocToPDFConverter(is, encoding);
             case "XHTML":
-                return new DocToHTMLConverter(is);
+                return new DocToHTMLConverter(is, encoding);
             default:
                 throw new IllegalArgumentException(String.format("Unknown output format: %s", outputFormat));
         }

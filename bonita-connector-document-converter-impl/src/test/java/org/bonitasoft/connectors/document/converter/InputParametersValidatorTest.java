@@ -106,6 +106,15 @@ public class InputParametersValidatorTest {
         validator.validateInputParameters();
     }
 
+    @Test
+    public void should_throw_a_ConnectorValidationException_if_encoding_is_set_and_not_valid() throws Exception {
+        final InputParametersValidator validator = new InputParametersValidator(
+                aMap(entry("sourceDocument", "aDocumentName"), entry("encoding", "invalid")));
+
+        excpetionRule.expect(ConnectorValidationException.class);
+        validator.validateInputParameters();
+    }
+
     private Map<String, Object> aMap(final MapEntry<String, ?>... mapEntries) {
         final Map<String, Object> parameters = new HashMap<String, Object>();
         for (final MapEntry<String, ?> mapEntry : mapEntries) {

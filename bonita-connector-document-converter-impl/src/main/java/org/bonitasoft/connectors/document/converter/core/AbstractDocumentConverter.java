@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.util.Objects;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.poi.xwpf.converter.pdf.PdfOptions;
 
 import fr.opensagres.xdocreport.converter.ConverterTypeTo;
 import fr.opensagres.xdocreport.converter.ConverterTypeVia;
@@ -33,12 +34,14 @@ import fr.opensagres.xdocreport.template.TemplateEngineKind;
 public abstract class AbstractDocumentConverter implements DocumentConverter {
 
     private final InputStream inputStream;
+    private final String encoding;
 
-    public AbstractDocumentConverter(final InputStream inputStream) {
+    public AbstractDocumentConverter(final InputStream inputStream, String encoding) {
         if (inputStream == null) {
             throw new IllegalArgumentException("Source document InputStream cannot be null");
         }
         this.inputStream = inputStream;
+        this.encoding = encoding;
     }
 
     @Override
@@ -47,7 +50,8 @@ public abstract class AbstractDocumentConverter implements DocumentConverter {
                 inputStream, TemplateEngineKind.Velocity);
         final IContext context = report.createContext();
         try (final ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            report.convert(context, Options.getTo(getOutputType()).via(converterImplementation(report)), out);
+            report.convert(context,
+                    Options.getTo(getOutputType()).via(converterImplementation(report)).subOptions(PdfOptions.create().fontEncoding(encoding)), out);
             return out.toByteArray();
         }
     }

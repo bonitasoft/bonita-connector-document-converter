@@ -33,14 +33,14 @@ public class DocumentConverterFactoryTest {
 
     @Test
     public void should_create_a_toPDF_converter() throws Exception {
-        final DocumentConverter pdfConverter = new DocumentConverterFactory().newConverter(new ByteArrayInputStream(new byte[0]), "PDF");
+        final DocumentConverter pdfConverter = new DocumentConverterFactory().newConverter(new ByteArrayInputStream(new byte[0]), "PDF", "utf-8");
 
         assertThat(pdfConverter).isInstanceOf(DocToPDFConverter.class);
     }
 
     @Test
     public void should_create_a_toHTML_converter() throws Exception {
-        final DocumentConverter pdfConverter = new DocumentConverterFactory().newConverter(new ByteArrayInputStream(new byte[0]), "XHTML");
+        final DocumentConverter pdfConverter = new DocumentConverterFactory().newConverter(new ByteArrayInputStream(new byte[0]), "XHTML", "utf-8");
 
         assertThat(pdfConverter).isInstanceOf(DocToHTMLConverter.class);
     }
@@ -49,6 +49,6 @@ public class DocumentConverterFactoryTest {
     public void should_throw_an_IllegalArgumentException_if_format_is_unknown() throws Exception {
         expectedExcpetion.expect(IllegalArgumentException.class);
 
-        new DocumentConverterFactory().newConverter(new ByteArrayInputStream(new byte[0]), "PPT");
+        new DocumentConverterFactory().newConverter(new ByteArrayInputStream(new byte[0]), "PPT", "utf-8");
     }
 }

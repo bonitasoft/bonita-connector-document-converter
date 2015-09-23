@@ -21,8 +21,8 @@ import fr.opensagres.xdocreport.converter.ConverterTypeVia;
 
 public class DocToPDFConverter extends AbstractDocumentConverter {
 
-    public DocToPDFConverter(final InputStream inputStream) {
-        super(inputStream);
+    public DocToPDFConverter(final InputStream inputStream, String encoding) {
+        super(inputStream, encoding);
     }
 
     @Override

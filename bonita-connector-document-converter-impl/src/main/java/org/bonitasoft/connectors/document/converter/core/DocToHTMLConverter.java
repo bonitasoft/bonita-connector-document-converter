@@ -21,8 +21,8 @@ import fr.opensagres.xdocreport.converter.ConverterTypeVia;
 
 public class DocToHTMLConverter extends AbstractDocumentConverter {
 
-    public DocToHTMLConverter(final InputStream inputStream) {
-        super(inputStream);
+    public DocToHTMLConverter(final InputStream inputStream, String encoding) {
+        super(inputStream, encoding);
     }
 
     @Override
