@@ -28,6 +28,8 @@ import org.bonitasoft.engine.bpm.document.DocumentValue;
 import org.bonitasoft.engine.connector.AbstractConnector;
 import org.bonitasoft.engine.connector.ConnectorException;
 import org.bonitasoft.engine.connector.ConnectorValidationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fr.opensagres.xdocreport.converter.ConverterTypeTo;
 import fr.opensagres.xdocreport.core.XDocReportException;
@@ -57,29 +59,40 @@ public class DocumentConverterConnector extends AbstractConnector {
      */
     @Override
     protected void executeBusinessLogic() throws ConnectorException {
+        final Logger logger = LoggerFactory.getLogger(DocumentConverterConnector.class);
         final ProcessAPI processAPI = getAPIAccessor().getProcessAPI();
-        final long processInstanceId = getExecutionContext().getProcessInstanceId();
-        ByteArrayInputStream is = null;
+        Document document;
         try {
-            final Document document = processAPI.getLastDocument(processInstanceId, getSourceDocumentReference());
-            final byte[] content = processAPI.getDocumentContent(document.getContentStorageId());
-            is = new ByteArrayInputStream(content);
+            document = loadDocument(processAPI);
+        } catch (final DocumentNotFoundException e) {
+            throw new ConnectorException(e);
+        }
+        byte[] content;
+        try {
+            content = processAPI.getDocumentContent(document.getContentStorageId());
+        } catch (final DocumentNotFoundException e) {
+            throw new ConnectorException(e);
+        }
+        try (ByteArrayInputStream is = new ByteArrayInputStream(content)) {
             final DocumentConverter converter = documentConverterFactory.newConverter(is, getOutputFormat(), getEncoding());
+
+            final long time = System.currentTimeMillis();
+            logger.info(String.format("Converting %s to %s...", document.getContentFileName(), getOutputFormat()));
+            final byte[] newContent = converter.convert();
+            logger.info(String.format("Convertion done in %s ms", System.currentTimeMillis() - time));
             setOutputParameter(OUTPUT_DOCUMENT_VALUE,
-                    createDocumentValue(converter.convert(),
+                    createDocumentValue(newContent,
                             MimeTypeUtil.forFormat(getOutputFormat()),
                             FilenameUtil.toOutputFileName((String) getInputParameter(OUTPUT_FILE_NAME), document.getContentFileName(), getOutputFormat())));
-        } catch (final DocumentNotFoundException | IOException | XDocReportException e) {
+        } catch (final IOException | XDocReportException e) {
             throw new ConnectorException(e);
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (final IOException e) {
-                    throw new ConnectorException(e);
-                }
-            }
         }
+    }
+
+    private Document loadDocument(final ProcessAPI processAPI) throws DocumentNotFoundException {
+        final long processInstanceId = getExecutionContext().getProcessInstanceId();
+        final Document document = processAPI.getLastDocument(processInstanceId, getSourceDocumentReference());
+        return document;
     }
 
     private String getSourceDocumentReference() {
