@@ -77,9 +77,13 @@ public class DocumentConverterConnector extends AbstractConnector {
             final DocumentConverter converter = documentConverterFactory.newConverter(is, getOutputFormat(), getEncoding());
 
             final long time = System.currentTimeMillis();
-            logger.info(String.format("Converting %s to %s...", document.getContentFileName(), getOutputFormat()));
+            if (logger.isDebugEnabled()) {
+                logger.debug(String.format("Converting %s to %s...", document.getContentFileName(), getOutputFormat()));
+            }
             final byte[] newContent = converter.convert();
-            logger.info(String.format("Convertion done in %s ms", System.currentTimeMillis() - time));
+            if (logger.isDebugEnabled()) {
+                logger.debug(String.format("Convertion done in %s ms", System.currentTimeMillis() - time));
+            }
             setOutputParameter(OUTPUT_DOCUMENT_VALUE,
                     createDocumentValue(newContent,
                             MimeTypeUtil.forFormat(getOutputFormat()),
