@@ -3,12 +3,12 @@
     <parent>
         <groupId>org.bonitasoft.connectors</groupId>
         <artifactId>bonita-connector-document-converter</artifactId>
-        <version>0.0.1</version>
+        <version>1.0.0</version>
     </parent>
     <artifactId>bonita-connector-document-converter-impl</artifactId>
 
     <properties>
-        <definition.version>0.0.1</definition.version>
+        <definition.version>1.0.0</definition.version>
         <xdocreport.version>1.0.5</xdocreport.version>
     </properties>
 
