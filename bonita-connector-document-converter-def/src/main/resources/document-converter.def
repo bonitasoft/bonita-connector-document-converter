@@ -9,9 +9,9 @@
 	<category id="office" icon="office.png" parentCategoryId="reporting" />
 
 	<input name="sourceDocument" type="java.lang.String" mandatory="true" />
-	<input name="encoding" type="java.lang.String" defaultValue="windows-1252"/>
+	<input name="encoding" type="java.lang.String" defaultValue="UTF-8"/>
 	<input name="outputFormat" type="java.lang.String" />
-	<input name="outputFileName" type="java.lang.String" defaultValue="myDocument.pdf" />
+	<input name="outputFileName" type="java.lang.String" />
 	
 	<output name="ouptutDocumentValue" type="org.bonitasoft.engine.bpm.document.DocumentValue" />
 	
