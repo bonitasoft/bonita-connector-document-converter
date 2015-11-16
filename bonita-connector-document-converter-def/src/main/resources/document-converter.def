@@ -5,8 +5,7 @@
 	<icon>pdf.gif</icon>
 
 
-	<category id="reporting" icon="Reporting.png"/>
-	<category id="office" icon="office.png" parentCategoryId="reporting" />
+	<category id="document" icon="Document.gif"/>
 
 	<input name="sourceDocument" type="java.lang.String" mandatory="true" />
 	<input name="encoding" type="java.lang.String" defaultValue="UTF-8"/>
