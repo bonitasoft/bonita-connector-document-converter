@@ -1,26 +1,18 @@
-/**
+/*
  * Copyright (C) 2015 Bonitasoft S.A.
- * Bonitasoft, 32 rue Gustave Eiffel - 38000 Grenoble
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2.0 of the License, or
- * (at your option) any later version.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Bonitasoft is a trademark of Bonitasoft SA.
+ * This software file is BONITASOFT CONFIDENTIAL. Not For Distribution.
+ * For commercial licensing information, contact:
+ * Bonitasoft, 32 rue Gustave Eiffel – 38000 Grenoble
+ * or Bonitasoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
  */
-package org.bonitasoft.connectors.document.converter;
+package com.bonitasoft.connectors.document.converter;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bonitasoft.connectors.document.converter.core.DocumentConverter;
-import org.bonitasoft.connectors.document.converter.core.DocumentConverterFactory;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.Document;
 import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
@@ -30,6 +22,9 @@ import org.bonitasoft.engine.connector.ConnectorException;
 import org.bonitasoft.engine.connector.ConnectorValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.bonitasoft.connectors.document.converter.core.DocumentConverter;
+import com.bonitasoft.connectors.document.converter.core.DocumentConverterFactory;
 
 import fr.opensagres.xdocreport.converter.ConverterTypeTo;
 import fr.opensagres.xdocreport.core.XDocReportException;
@@ -41,7 +36,7 @@ public class DocumentConverterConnector extends AbstractConnector {
     static final String ENCODING = "encoding";
     static final String OUTPUT_FORMAT = "outputFormat";
     static final String OUTPUT_FILE_NAME = "outputFileName";
-    static final String OUTPUT_DOCUMENT_VALUE = "ouptutDocumentValue";
+    static final String OUTPUT_DOCUMENT_VALUE = "outputDocumentValue";
     private final DocumentConverterFactory documentConverterFactory;
 
     public DocumentConverterConnector() {
@@ -82,7 +77,7 @@ public class DocumentConverterConnector extends AbstractConnector {
             }
             final byte[] newContent = converter.convert();
             if (logger.isDebugEnabled()) {
-                logger.debug(String.format("Convertion done in %s ms", System.currentTimeMillis() - time));
+                logger.debug(String.format("Conversion done in %s ms", System.currentTimeMillis() - time));
             }
             setOutputParameter(OUTPUT_DOCUMENT_VALUE,
                     createDocumentValue(newContent,
@@ -95,8 +90,7 @@ public class DocumentConverterConnector extends AbstractConnector {
 
     private Document loadDocument(final ProcessAPI processAPI) throws DocumentNotFoundException {
         final long processInstanceId = getExecutionContext().getProcessInstanceId();
-        final Document document = processAPI.getLastDocument(processInstanceId, getSourceDocumentReference());
-        return document;
+        return processAPI.getLastDocument(processInstanceId, getSourceDocumentReference());
     }
 
     private String getSourceDocumentReference() {

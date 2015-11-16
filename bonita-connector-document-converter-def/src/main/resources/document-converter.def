@@ -12,7 +12,7 @@
 	<input name="outputFormat" type="java.lang.String" />
 	<input name="outputFileName" type="java.lang.String" />
 	
-	<output name="ouptutDocumentValue" type="org.bonitasoft.engine.bpm.document.DocumentValue" />
+	<output name="outputDocumentValue" type="org.bonitasoft.engine.bpm.document.DocumentValue" />
 	
 	<page id="configPage">
 		<widget id="sourceDocument" inputName="sourceDocument" xsi:type="definition:Text" showDocuments="true" />

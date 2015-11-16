@@ -5,7 +5,7 @@
 	<definitionId>document-converter</definitionId>
 	<definitionVersion>$definition.version$</definitionVersion>
     <description>Implementation based xdocreport</description>
-	<implementationClassname>org.bonitasoft.connectors.document.converter.DocumentConverterConnector</implementationClassname>
+	<implementationClassname>com.bonitasoft.connectors.document.converter.DocumentConverterConnector</implementationClassname>
 	<implementationId>document-converter-impl</implementationId>
 	<implementationVersion>$implementation.version$</implementationVersion>
 
