@@ -1,10 +1,10 @@
 /*
  * Copyright (C) 2015 Bonitasoft S.A.
- * Bonitasoft is a trademark of BonitaSoft SA.
+ * Bonitasoft is a trademark of Bonitasoft SA.
  * This software file is BONITASOFT CONFIDENTIAL. Not For Distribution.
  * For commercial licensing information, contact:
- * BonitaSoft, 32 rue Gustave Eiffel – 38000 Grenoble
- * or BonitaSoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
+ * Bonitasoft, 32 rue Gustave Eiffel – 38000 Grenoble
+ * or Bonitasoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
  */
 package com.bonitasoft.connectors.document.converter;
 
@@ -12,18 +12,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.ByteArrayInputStream;
 
-import com.bonitasoft.connectors.document.converter.core.DocToHTMLConverter;
-import com.bonitasoft.connectors.document.converter.core.DocumentConverterFactory;
-import com.bonitasoft.connectors.document.converter.core.DocToPDFConverter;
-import com.bonitasoft.connectors.document.converter.core.DocumentConverter;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.bonitasoft.connectors.document.converter.core.DocToHTMLConverter;
+import com.bonitasoft.connectors.document.converter.core.DocToPDFConverter;
+import com.bonitasoft.connectors.document.converter.core.DocumentConverter;
+import com.bonitasoft.connectors.document.converter.core.DocumentConverterFactory;
+
 public class DocumentConverterFactoryTest {
 
     @Rule
-    public ExpectedException expectedExcpetion = ExpectedException.none();
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void should_create_a_toPDF_converter() throws Exception {
@@ -41,7 +42,8 @@ public class DocumentConverterFactoryTest {
 
     @Test
     public void should_throw_an_IllegalArgumentException_if_format_is_unknown() throws Exception {
-        expectedExcpetion.expect(IllegalArgumentException.class);
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Supported formats are PDF, XHTML");
 
         new DocumentConverterFactory().newConverter(new ByteArrayInputStream(new byte[0]), "PPT", "utf-8");
     }
