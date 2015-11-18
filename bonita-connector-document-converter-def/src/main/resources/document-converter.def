@@ -4,8 +4,7 @@
 	<version>$definition.version$</version>
 	<icon>pdf.gif</icon>
 
-
-	<category id="document" icon="Document.gif"/>
+	<category id="office" icon="office.png"/>
 
 	<input name="sourceDocument" type="java.lang.String" mandatory="true" />
 	<input name="encoding" type="java.lang.String" defaultValue="UTF-8"/>
