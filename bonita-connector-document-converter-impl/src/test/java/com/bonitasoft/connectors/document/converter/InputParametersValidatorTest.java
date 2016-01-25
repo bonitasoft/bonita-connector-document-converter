@@ -50,21 +50,6 @@ public class InputParametersValidatorTest {
         validator.validateInputParameters();
     }
 
-    @Test
-    public void should_throw_a_ConnectorValidationException_if_outputFormat_is_set_and_not_a_valid_string_value() throws Exception {
-        final InputParametersValidator validator = new InputParametersValidator(aMap(entry("sourceDocument", "aDocumentName"), entry("outputFormat", "PPT")));
-
-        exceptionRule.expect(ConnectorValidationException.class);
-        validator.validateInputParameters();
-    }
-
-    @Test
-    public void should_throw_a_ConnectorValidationException_if_outputFormat_is_set_and_not_a_String() throws Exception {
-        final InputParametersValidator validator = new InputParametersValidator(aMap(entry("sourceDocument", "aDocumentName"), entry("outputFormat", 0)));
-
-        exceptionRule.expect(ConnectorValidationException.class);
-        validator.validateInputParameters();
-    }
 
     @Test
     public void should_throw_a_ConnectorValidationException_if_outputFileName_is_set_and_not_a_String() throws Exception {

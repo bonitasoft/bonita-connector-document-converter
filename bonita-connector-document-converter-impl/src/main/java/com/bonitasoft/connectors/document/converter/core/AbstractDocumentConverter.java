@@ -45,9 +45,17 @@ public abstract class AbstractDocumentConverter implements DocumentConverter {
         final IContext context = report.createContext();
         try (final ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             report.convert(context,
-                    Options.getTo(getOutputType()).via(converterImplementation(report)).subOptions(PdfOptions.create().fontEncoding(encoding)), out);
+                    Options.getTo(getOutputType()).via(converterImplementation(report)).subOptions(getPDFOptions()), out);
             return out.toByteArray();
         }
+    }
+
+    protected PdfOptions getPDFOptions() {
+        PdfOptions options = PdfOptions.create();
+        if (encoding != null && !encoding.isEmpty()) {
+            options = options.fontEncoding(encoding);
+        }
+        return options;
     }
 
     protected abstract ConverterTypeTo getOutputType();

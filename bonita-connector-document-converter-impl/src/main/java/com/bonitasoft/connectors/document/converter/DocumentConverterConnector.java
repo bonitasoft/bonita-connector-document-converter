@@ -31,10 +31,8 @@ import fr.opensagres.xdocreport.core.XDocReportException;
 
 public class DocumentConverterConnector extends AbstractConnector {
 
-    private static final String DEFAULT_ENCODING = "utf-8";
     static final String SOURCE_DOCUMENT = "sourceDocument";
     static final String ENCODING = "encoding";
-    static final String OUTPUT_FORMAT = "outputFormat";
     static final String OUTPUT_FILE_NAME = "outputFileName";
     static final String OUTPUT_DOCUMENT_VALUE = "outputDocumentValue";
     private final DocumentConverterFactory documentConverterFactory;
@@ -69,11 +67,11 @@ public class DocumentConverterConnector extends AbstractConnector {
             throw new ConnectorException(e);
         }
         try (ByteArrayInputStream is = new ByteArrayInputStream(content)) {
-            final DocumentConverter converter = documentConverterFactory.newConverter(is, getOutputFormat(), getEncoding());
+            final DocumentConverter converter = documentConverterFactory.newConverter(is, ConverterTypeTo.PDF.name(), getEncoding());
 
             final long time = System.currentTimeMillis();
             if (logger.isDebugEnabled()) {
-                logger.debug(String.format("Converting %s to %s...", document.getContentFileName(), getOutputFormat()));
+                logger.debug(String.format("Converting %s to %s...", document.getContentFileName(), ConverterTypeTo.PDF.name()));
             }
             final byte[] newContent = converter.convert();
             if (logger.isDebugEnabled()) {
@@ -81,8 +79,9 @@ public class DocumentConverterConnector extends AbstractConnector {
             }
             setOutputParameter(OUTPUT_DOCUMENT_VALUE,
                     createDocumentValue(newContent,
-                            MimeTypeUtil.forFormat(getOutputFormat()),
-                            FilenameUtil.toOutputFileName((String) getInputParameter(OUTPUT_FILE_NAME), document.getContentFileName(), getOutputFormat())));
+                            MimeTypeUtil.forFormat(ConverterTypeTo.PDF.name()),
+                            FilenameUtil.toOutputFileName((String) getInputParameter(OUTPUT_FILE_NAME), document.getContentFileName(),
+                                    ConverterTypeTo.PDF.name())));
         } catch (final IOException | XDocReportException e) {
             throw new ConnectorException(e);
         }
@@ -97,12 +96,8 @@ public class DocumentConverterConnector extends AbstractConnector {
         return (String) getInputParameter(SOURCE_DOCUMENT);
     }
 
-    private String getOutputFormat() {
-        return (String) getInputParameter(OUTPUT_FORMAT, ConverterTypeTo.PDF.name());
-    }
-
     private String getEncoding() {
-        return (String) getInputParameter(ENCODING, DEFAULT_ENCODING);
+        return (String) getInputParameter(ENCODING);
     }
 
     private DocumentValue createDocumentValue(final byte[] content, final String mimeType, final String outputFileName) {
@@ -122,7 +117,6 @@ public class DocumentConverterConnector extends AbstractConnector {
         final Map<String, Object> inputParameters = new HashMap<>();
         inputParameters.put(OUTPUT_FILE_NAME, getInputParameter(OUTPUT_FILE_NAME));
         inputParameters.put(SOURCE_DOCUMENT, getInputParameter(SOURCE_DOCUMENT));
-        inputParameters.put(OUTPUT_FORMAT, getInputParameter(OUTPUT_FORMAT));
         inputParameters.put(ENCODING, getInputParameter(ENCODING));
         return inputParameters;
     }

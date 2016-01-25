@@ -10,22 +10,11 @@ package com.bonitasoft.connectors.document.converter;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.bonitasoft.engine.connector.ConnectorValidationException;
 
-import fr.opensagres.xdocreport.converter.ConverterTypeTo;
-
 public class InputParametersValidator {
-
-    static final List<String> SUPPORTED_FORMATS = new ArrayList<>();
-
-    static {
-        SUPPORTED_FORMATS.add(ConverterTypeTo.PDF.name());
-        SUPPORTED_FORMATS.add(ConverterTypeTo.XHTML.name());
-    }
 
     private final Map<String, Object> inputParameters;
 
@@ -35,7 +24,6 @@ public class InputParametersValidator {
 
     public void validateInputParameters() throws ConnectorValidationException {
         validateSourceDocumentInput();
-        validateOutputFormatInput();
         validateOutputFileName();
         validateEncoding();
     }
@@ -77,18 +65,6 @@ public class InputParametersValidator {
         }
     }
 
-    private void validateOutputFormatInput() throws ConnectorValidationException {
-        final Object outputFormat = inputParameters.get(DocumentConverterConnector.OUTPUT_FORMAT);
-        if (outputFormat != null && !(outputFormat instanceof String)) {
-            throw new ConnectorValidationException(
-                    String.format("Input parameter %s must be of type %s.", DocumentConverterConnector.OUTPUT_FORMAT, String.class.getName()));
-        }
-        if (outputFormat != null && !acceptFormat((String) outputFormat)) {
-            throw new ConnectorValidationException(
-                    String.format("Input parameter %s has an invalid value: %s. Allowed values are %s", DocumentConverterConnector.OUTPUT_FORMAT, outputFormat,
-                            SUPPORTED_FORMATS));
-        }
-    }
 
     private void validateEncoding() throws ConnectorValidationException {
         final Object encoding = inputParameters.get(DocumentConverterConnector.ENCODING);
@@ -103,8 +79,5 @@ public class InputParametersValidator {
         }
     }
 
-    private boolean acceptFormat(final String outputFormat) {
-        return SUPPORTED_FORMATS.contains(outputFormat);
-    }
 
 }
