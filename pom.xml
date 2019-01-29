@@ -194,7 +194,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>sap</id>
+                        <id>document-converter</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
