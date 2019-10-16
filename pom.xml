@@ -87,11 +87,6 @@
         </dependency>
         <dependency>
             <groupId>fr.opensagres.xdocreport</groupId>
-            <artifactId>fr.opensagres.xdocreport.document.odt</artifactId>
-            <version>${xdocreport.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>fr.opensagres.xdocreport</groupId>
             <artifactId>fr.opensagres.xdocreport.itext.extension</artifactId>
             <version>${xdocreport.version}</version>
         </dependency>
@@ -103,6 +98,11 @@
         <dependency>
             <groupId>fr.opensagres.xdocreport</groupId>
             <artifactId>fr.opensagres.xdocreport.template.velocity</artifactId>
+            <version>${xdocreport.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fr.opensagres.xdocreport</groupId>
+            <artifactId>fr.opensagres.xdocreport.document.odt</artifactId>
             <version>${xdocreport.version}</version>
         </dependency>
         <dependency>
