@@ -30,12 +30,6 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>org.apache.xmlbeans</groupId>
-                <artifactId>xmlbeans</artifactId>
-                <version>2.3.0</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
                 <version>3.2.1</version>
@@ -78,7 +72,17 @@
         </dependency>
         <dependency>
             <groupId>fr.opensagres.xdocreport</groupId>
+            <artifactId>fr.opensagres.xdocreport.core</artifactId>
+            <version>${xdocreport.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fr.opensagres.xdocreport</groupId>
             <artifactId>fr.opensagres.xdocreport.document</artifactId>
+            <version>${xdocreport.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fr.opensagres.xdocreport</groupId>
+            <artifactId>fr.opensagres.xdocreport.template.velocity</artifactId>
             <version>${xdocreport.version}</version>
         </dependency>
         <dependency>
@@ -93,19 +97,34 @@
         </dependency>
         <dependency>
             <groupId>fr.opensagres.xdocreport</groupId>
-            <artifactId>fr.opensagres.xdocreport.itext.extension</artifactId>
+            <artifactId>fr.opensagres.xdocreport.converter.odt.odfdom</artifactId>
             <version>${xdocreport.version}</version>
         </dependency>
         <dependency>
             <groupId>fr.opensagres.xdocreport</groupId>
-            <artifactId>org.apache.poi.xwpf.converter.core</artifactId>
+            <artifactId>fr.opensagres.xdocreport.document.odt</artifactId>
             <version>${xdocreport.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-codec</artifactId>
-                    <groupId>commons-codec</groupId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>fr.opensagres.xdocreport</groupId>
+            <artifactId>fr.opensagres.xdocreport.converter.docx.xwpf</artifactId>
+            <version>${xdocreport.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fr.opensagres.xdocreport</groupId>
+            <artifactId>fr.opensagres.xdocreport.itext.extension</artifactId>
+            <version>${xdocreport.version}</version>
+        </dependency>
+       <!-- 
+        <dependency>
+            <groupId>fr.opensagres.xdocreport</groupId>
+            <artifactId>fr.opensagres.xdocreport.document.docx</artifactId>
+            <version>${xdocreport.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fr.opensagres.xdocreport</groupId>
+            <artifactId>fr.opensagres.xdocreport.itext.extension</artifactId>
+            <version>${xdocreport.version}</version>
         </dependency>
         <dependency>
             <groupId>fr.opensagres.xdocreport</groupId>
@@ -126,7 +145,7 @@
             <groupId>fr.opensagres.xdocreport</groupId>
             <artifactId>fr.opensagres.xdocreport.converter.odt.odfdom</artifactId>
             <version>${xdocreport.version}</version>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

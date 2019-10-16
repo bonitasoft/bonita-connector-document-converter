@@ -13,8 +13,8 @@ import java.io.InputStream;
 import java.util.Objects;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.apache.poi.xwpf.converter.pdf.PdfOptions;
 
+import fr.opensagres.odfdom.converter.pdf.PdfOptions;
 import fr.opensagres.xdocreport.converter.ConverterTypeTo;
 import fr.opensagres.xdocreport.converter.ConverterTypeVia;
 import fr.opensagres.xdocreport.converter.Options;
