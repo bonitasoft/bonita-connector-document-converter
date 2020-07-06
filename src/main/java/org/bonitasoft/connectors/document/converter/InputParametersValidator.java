@@ -24,6 +24,7 @@ import org.bonitasoft.engine.connector.ConnectorValidationException;
 
 public class InputParametersValidator {
 
+    private static final String INPUT_PARAMETER_TYPE_ERROR_MESSAGE_PATTERN = "Input parameter %s must be of type %s.";
     private final Map<String, Object> inputParameters;
 
     public InputParametersValidator(final Map<String, Object> inputParameters) {
@@ -43,7 +44,7 @@ public class InputParametersValidator {
         }
         if (!(sourceDocumentName instanceof String)) {
             throw new ConnectorValidationException(
-                    String.format("Input parameter %s must be of type %s.", DocumentConverterConnector.SOURCE_DOCUMENT, String.class.getName()));
+                    String.format(INPUT_PARAMETER_TYPE_ERROR_MESSAGE_PATTERN, DocumentConverterConnector.SOURCE_DOCUMENT, String.class.getName()));
         }
         if (((String) sourceDocumentName).isEmpty()) {
             throw new ConnectorValidationException(String.format("Input parameter %s cannot be empty.", DocumentConverterConnector.SOURCE_DOCUMENT));
@@ -54,7 +55,7 @@ public class InputParametersValidator {
         final Object outputFileName = inputParameters.get(DocumentConverterConnector.OUTPUT_FILE_NAME);
         if (outputFileName != null && !(outputFileName instanceof String)) {
             throw new ConnectorValidationException(
-                    String.format("Input parameter %s must be of type %s.", DocumentConverterConnector.OUTPUT_FILE_NAME, String.class.getName()));
+                    String.format(INPUT_PARAMETER_TYPE_ERROR_MESSAGE_PATTERN, DocumentConverterConnector.OUTPUT_FILE_NAME, String.class.getName()));
         }
         if (outputFileName != null && !isValidFileName((String) outputFileName)) {
             throw new ConnectorValidationException(
@@ -78,7 +79,7 @@ public class InputParametersValidator {
         final Object encoding = inputParameters.get(DocumentConverterConnector.ENCODING);
         if (encoding != null && !(encoding instanceof String)) {
             throw new ConnectorValidationException(
-                    String.format("Input parameter %s must be of type %s.", DocumentConverterConnector.OUTPUT_FILE_NAME, String.class.getName()));
+                    String.format(INPUT_PARAMETER_TYPE_ERROR_MESSAGE_PATTERN, DocumentConverterConnector.OUTPUT_FILE_NAME, String.class.getName()));
         }
         if (encoding != null && !java.nio.charset.Charset.isSupported((String) encoding)) {
             throw new ConnectorValidationException(

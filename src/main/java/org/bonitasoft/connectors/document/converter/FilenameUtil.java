@@ -17,6 +17,10 @@
 package org.bonitasoft.connectors.document.converter;
 
 public class FilenameUtil {
+    
+    private FilenameUtil() {
+        
+    }
 
     public static String toOutputFileName(String filename, final String originalFileName, final String outputFormat) {
         filename = filename == null || filename.isEmpty() ? originalFileName : filename;

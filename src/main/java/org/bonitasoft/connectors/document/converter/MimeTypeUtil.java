@@ -19,6 +19,10 @@ package org.bonitasoft.connectors.document.converter;
 import fr.opensagres.xdocreport.converter.ConverterTypeTo;
 
 public class MimeTypeUtil {
+    
+    private MimeTypeUtil() {
+        
+    }
 
     public static String forFormat(final String format) {
         switch (ConverterTypeTo.valueOf(format)) {
