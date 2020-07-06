@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<implementation:connectorImplementation
+	xmlns:implementation="http://www.bonitasoft.org/ns/connector/implementation/6.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<definitionId>${document-converter.def.id}</definitionId>
+	<definitionVersion>${document-converter.def.version}</definitionVersion>
+	<description>Implementation based xdocreport</description>
+	<implementationClassname>${document-converter.main-class}</implementationClassname>
+	<implementationId>${document-converter.impl.id}</implementationId>
+	<implementationVersion>${document-converter.impl.version}
+	</implementationVersion>
+
+	<!-- retrieved from the pom.xml at build time -->
+	${connector-dependencies}
+
+</implementation:connectorImplementation>

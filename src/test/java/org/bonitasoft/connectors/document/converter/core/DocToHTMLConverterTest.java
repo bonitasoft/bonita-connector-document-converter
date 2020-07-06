@@ -9,27 +9,21 @@
 package org.bonitasoft.connectors.document.converter.core;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
-
-public class DocToHTMLConverterTest {
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+class DocToHTMLConverterTest {
 
     @Test
-    public void should_throw_an_IllegalArgumentException_if_inputStream_is_null() throws Exception {
-        expectedException.expect(IllegalArgumentException.class);
-
-        new DocToHTMLConverter(null, "utf-8");
+    void should_throw_an_IllegalArgumentException_if_inputStream_is_null() throws Exception {
+        assertThrows(IllegalArgumentException.class, () -> new DocToHTMLConverter(null, "utf-8"));
     }
 
     @Test
-    public void should_convert_docx_to_xhtml() throws Exception {
-        final DocToHTMLConverter converter = new DocToHTMLConverter(DocToHTMLConverterTest.class.getResourceAsStream("/patern-signets.docx"), "utf-8");
+    void should_convert_docx_to_xhtml() throws Exception {
+        final DocToHTMLConverter converter = new DocToHTMLConverter(
+                DocToHTMLConverterTest.class.getResourceAsStream("/patern-signets.docx"), "utf-8");
 
         final byte[] content = converter.convert();
 
@@ -37,8 +31,9 @@ public class DocToHTMLConverterTest {
     }
 
     @Test
-    public void should_convert_odt_to_xhtml() throws Exception {
-        final DocToHTMLConverter converter = new DocToHTMLConverter(DocToHTMLConverterTest.class.getResourceAsStream("/odtTest.odt"), "utf-8");
+    void should_convert_odt_to_xhtml() throws Exception {
+        final DocToHTMLConverter converter = new DocToHTMLConverter(
+                DocToHTMLConverterTest.class.getResourceAsStream("/odtTest.odt"), "utf-8");
 
         final byte[] content = converter.convert();
 

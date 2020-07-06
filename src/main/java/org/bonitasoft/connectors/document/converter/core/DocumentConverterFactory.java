@@ -16,14 +16,14 @@
  */
 package org.bonitasoft.connectors.document.converter.core;
 
-import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 public class DocumentConverterFactory {
 
     public static final String PDF = "PDF";
     public static final String XHTML = "XHTML";
 
-    public DocumentConverter newConverter(final ByteArrayInputStream is, final String outputFormat, String encoding) {
+    public DocumentConverter newConverter(InputStream is, String outputFormat, String encoding) {
         switch (outputFormat) {
             case PDF:
                 return new DocToPDFConverter(is, encoding);

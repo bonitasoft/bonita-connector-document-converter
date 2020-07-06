@@ -10,40 +10,41 @@ package org.bonitasoft.connectors.document.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class FilenameUtilTest {
+
+class FilenameUtilTest {
 
     @Test
-    public void should_return_original_filename_with_pdf_extension() throws Exception {
+    void should_return_original_filename_with_pdf_extension() throws Exception {
         final String outputFileName = FilenameUtil.toOutputFileName("", "myOriginalFileName.docx", "PDF");
 
         assertThat(outputFileName).isEqualTo("myOriginalFileName.pdf");
     }
 
     @Test
-    public void should_return_original_filename_with_html_extension() throws Exception {
+    void should_return_original_filename_with_html_extension() throws Exception {
         final String outputFileName = FilenameUtil.toOutputFileName(null, "myOriginalFileName.docx", "XHTML");
 
         assertThat(outputFileName).isEqualTo("myOriginalFileName.html");
     }
 
     @Test
-    public void should_return_new_filename_with_pdf_extension() throws Exception {
+    void should_return_new_filename_with_pdf_extension() throws Exception {
         final String outputFileName = FilenameUtil.toOutputFileName("aNewName", "myOriginalFileName.docx", "PDF");
 
         assertThat(outputFileName).isEqualTo("aNewName.pdf");
     }
 
     @Test
-    public void should_return_new_filename_with_html_extension() throws Exception {
+    void should_return_new_filename_with_html_extension() throws Exception {
         final String outputFileName = FilenameUtil.toOutputFileName("aNewName.odt", "myOriginalFileName.docx", "XHTML");
 
         assertThat(outputFileName).isEqualTo("aNewName.html");
     }
 
     @Test
-    public void should_return_new_filename_with_html_extension2() throws Exception {
+    void should_return_new_filename_with_html_extension2() throws Exception {
         final String outputFileName = FilenameUtil.toOutputFileName("aNewName.html", "myOriginalFileName.docx", "XHTML");
 
         assertThat(outputFileName).isEqualTo("aNewName.html");

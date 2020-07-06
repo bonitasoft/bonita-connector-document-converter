@@ -9,68 +9,58 @@
 package org.bonitasoft.connectors.document.converter;
 
 import static org.assertj.core.api.Assertions.entry;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.SystemUtils;
 import org.assertj.core.data.MapEntry;
 import org.bonitasoft.engine.connector.ConnectorValidationException;
-import org.junit.Assume;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
-public class InputParametersValidatorTest {
-
-    @Rule
-    public ExpectedException exceptionRule = ExpectedException.none();
+class InputParametersValidatorTest {
 
     @Test
-    public void should_throw_a_ConnectorValidationException_if_sourceDocument_is_null() throws Exception {
+   void should_throw_a_ConnectorValidationException_if_sourceDocument_is_null() throws Exception {
         final InputParametersValidator validator = new InputParametersValidator(aMap());
 
-        exceptionRule.expect(ConnectorValidationException.class);
-        validator.validateInputParameters();
+        assertThrows(ConnectorValidationException.class, () -> validator.validateInputParameters());
     }
 
     @Test
-    public void should_throw_a_ConnectorValidationException_if_sourceDocument_is_not_a_String() throws Exception {
+   void should_throw_a_ConnectorValidationException_if_sourceDocument_is_not_a_String() throws Exception {
         final InputParametersValidator validator = new InputParametersValidator(aMap(entry("sourceDocument", 0)));
 
-        exceptionRule.expect(ConnectorValidationException.class);
-        validator.validateInputParameters();
+        assertThrows(ConnectorValidationException.class, () -> validator.validateInputParameters());
     }
 
     @Test
-    public void should_throw_a_ConnectorValidationException_if_sourceDocument_is_an_empty_String() throws Exception {
+   void should_throw_a_ConnectorValidationException_if_sourceDocument_is_an_empty_String() throws Exception {
         final InputParametersValidator validator = new InputParametersValidator(aMap(entry("sourceDocument", "")));
 
-        exceptionRule.expect(ConnectorValidationException.class);
-        validator.validateInputParameters();
+        assertThrows(ConnectorValidationException.class, () -> validator.validateInputParameters());
     }
 
 
     @Test
-    public void should_throw_a_ConnectorValidationException_if_outputFileName_is_set_and_not_a_String() throws Exception {
+   void should_throw_a_ConnectorValidationException_if_outputFileName_is_set_and_not_a_String() throws Exception {
         final InputParametersValidator validator = new InputParametersValidator(aMap(entry("sourceDocument", "aDocumentName"), entry("outputFileName", 0)));
 
-        exceptionRule.expect(ConnectorValidationException.class);
-        validator.validateInputParameters();
+        assertThrows(ConnectorValidationException.class, () -> validator.validateInputParameters());
     }
 
     @Test
-    public void should_throw_a_ConnectorValidationException_if_outputFileName_is_set_and_not_a_valid_filename() throws Exception {
-        Assume.assumeTrue(SystemUtils.IS_OS_WINDOWS);
+   void should_throw_a_ConnectorValidationException_if_outputFileName_is_set_and_not_a_valid_filename() throws Exception {
+        assumeTrue(System.getProperty("os.name").startsWith("Windows"));
         final InputParametersValidator validator = new InputParametersValidator(
                 aMap(entry("sourceDocument", "aDocumentName"), entry("outputFileName", "aInvalidFileName?")));
 
-        exceptionRule.expect(ConnectorValidationException.class);
-        validator.validateInputParameters();
+        assertThrows(ConnectorValidationException.class, () -> validator.validateInputParameters());
     }
 
     @Test
-    public void should_be_valid_if_optional_parameters_are_not_set() throws Exception {
+   void should_be_valid_if_optional_parameters_are_not_set() throws Exception {
         final InputParametersValidator validator = new InputParametersValidator(
                 aMap(entry("sourceDocument", "aDocumentName")));
 
@@ -78,7 +68,7 @@ public class InputParametersValidatorTest {
     }
 
     @Test
-    public void should_validate_input_parameters() throws Exception {
+   void should_validate_input_parameters() throws Exception {
         final InputParametersValidator validator = new InputParametersValidator(
                 aMap(entry("sourceDocument", "aDocumentName"), entry("outputFormat", "PDF"), entry("outputFileName", "aValidaFileName.pdf")));
 
@@ -86,12 +76,11 @@ public class InputParametersValidatorTest {
     }
 
     @Test
-    public void should_throw_a_ConnectorValidationException_if_encoding_is_set_and_not_valid() throws Exception {
+   void should_throw_a_ConnectorValidationException_if_encoding_is_set_and_not_valid() throws Exception {
         final InputParametersValidator validator = new InputParametersValidator(
                 aMap(entry("sourceDocument", "aDocumentName"), entry("encoding", "invalid")));
 
-        exceptionRule.expect(ConnectorValidationException.class);
-        validator.validateInputParameters();
+       assertThrows(ConnectorValidationException.class, () -> validator.validateInputParameters());
     }
 
     private Map<String, Object> aMap(final MapEntry<String, ?>... mapEntries) {

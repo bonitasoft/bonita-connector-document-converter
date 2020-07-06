@@ -11,12 +11,12 @@ package org.bonitasoft.connectors.document.converter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.bonitasoft.connectors.document.converter.core.DocToPDFConverter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class DocToPDFConverterTest {
+class DocToPDFConverterTest {
 
     @Test
-    public void should_convert_docx_to_pdf() throws Exception {
+    void should_convert_docx_to_pdf() throws Exception {
         final DocToPDFConverter docxToPDFConverter = new DocToPDFConverter(DocToPDFConverterTest.class.getResourceAsStream("/patern-signets.docx"), "utf-8");
 
         final byte[] content = docxToPDFConverter.convert();
@@ -25,7 +25,7 @@ public class DocToPDFConverterTest {
     }
 
     @Test
-    public void should_convert_odt_to_pdf() throws Exception {
+    void should_convert_odt_to_pdf() throws Exception {
         final DocToPDFConverter docxToPDFConverter = new DocToPDFConverter(DocToPDFConverterTest.class.getResourceAsStream("/odtTest.odt"), "utf-8");
 
         final byte[] content = docxToPDFConverter.convert();
