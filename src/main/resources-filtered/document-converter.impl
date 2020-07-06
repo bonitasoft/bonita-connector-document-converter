@@ -8,8 +8,7 @@
 	<description>Implementation based xdocreport</description>
 	<implementationClassname>${document-converter.main-class}</implementationClassname>
 	<implementationId>${document-converter.impl.id}</implementationId>
-	<implementationVersion>${document-converter.impl.version}
-	</implementationVersion>
+	<implementationVersion>${document-converter.impl.version}</implementationVersion>
 
 	<!-- retrieved from the pom.xml at build time -->
 	${connector-dependencies}
