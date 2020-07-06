@@ -9,6 +9,7 @@
 package org.bonitasoft.connectors.document.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayInputStream;
 
@@ -16,34 +17,29 @@ import org.bonitasoft.connectors.document.converter.core.DocToHTMLConverter;
 import org.bonitasoft.connectors.document.converter.core.DocToPDFConverter;
 import org.bonitasoft.connectors.document.converter.core.DocumentConverter;
 import org.bonitasoft.connectors.document.converter.core.DocumentConverterFactory;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
-public class DocumentConverterFactoryTest {
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+class DocumentConverterFactoryTest {
 
     @Test
-    public void should_create_a_toPDF_converter() throws Exception {
+    void should_create_a_toPDF_converter() throws Exception {
         final DocumentConverter pdfConverter = new DocumentConverterFactory().newConverter(new ByteArrayInputStream(new byte[0]), "PDF", "utf-8");
 
         assertThat(pdfConverter).isInstanceOf(DocToPDFConverter.class);
     }
 
     @Test
-    public void should_create_a_toHTML_converter() throws Exception {
+    void should_create_a_toHTML_converter() throws Exception {
         final DocumentConverter pdfConverter = new DocumentConverterFactory().newConverter(new ByteArrayInputStream(new byte[0]), "XHTML", "utf-8");
 
         assertThat(pdfConverter).isInstanceOf(DocToHTMLConverter.class);
     }
 
     @Test
-    public void should_throw_an_IllegalArgumentException_if_format_is_unknown() throws Exception {
-        expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("Supported formats are PDF, XHTML");
-
-        new DocumentConverterFactory().newConverter(new ByteArrayInputStream(new byte[0]), "PPT", "utf-8");
+    void should_throw_an_IllegalArgumentException_if_format_is_unknown() throws Exception {
+        DocumentConverterFactory documentConverterFactory = new DocumentConverterFactory();
+        assertThrows(IllegalArgumentException.class,
+                () -> documentConverterFactory.newConverter(null, "PPT", "utf-8"),
+                "Supported formats are PDF, XHTML");
     }
 }

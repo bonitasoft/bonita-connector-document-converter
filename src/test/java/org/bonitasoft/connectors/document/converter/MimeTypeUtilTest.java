@@ -10,22 +10,22 @@ package org.bonitasoft.connectors.document.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class MimeTypeUtilTest {
+class MimeTypeUtilTest {
 
     @Test
-    public void should_return_pdf_mime_type() throws Exception {
+    void should_return_pdf_mime_type() throws Exception {
         assertThat(MimeTypeUtil.forFormat("PDF")).isEqualTo("application/pdf");
     }
 
     @Test
-    public void should_return_html_mime_type() throws Exception {
+    void should_return_html_mime_type() throws Exception {
         assertThat(MimeTypeUtil.forFormat("XHTML")).isEqualTo("application/xhtml+xml");
     }
 
     @Test
-    public void should_return_plain_text_type_otherwise() throws Exception {
+    void should_return_plain_text_type_otherwise() throws Exception {
         assertThat(MimeTypeUtil.forFormat("FO")).isEqualTo("text/plain");
     }
 

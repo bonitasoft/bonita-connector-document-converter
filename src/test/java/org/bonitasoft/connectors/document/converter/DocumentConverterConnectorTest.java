@@ -9,15 +9,16 @@
 package org.bonitasoft.connectors.document.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,39 +31,37 @@ import org.bonitasoft.engine.bpm.document.DocumentValue;
 import org.bonitasoft.engine.bpm.document.impl.DocumentImpl;
 import org.bonitasoft.engine.connector.ConnectorException;
 import org.bonitasoft.engine.connector.EngineExecutionContext;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import fr.opensagres.xdocreport.core.XDocReportException;
 
-@RunWith(MockitoJUnitRunner.class)
-public class DocumentConverterConnectorTest {
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
+class DocumentConverterConnectorTest {
+    
     private final long processInstanceId = 4861356546l;
 
-    @Mock
-    private APIAccessor apiAccessor;
-    @Mock
-    private EngineExecutionContext engineExecutionContext;
-    @Mock
-    private ProcessAPI processAPI;
-    @Mock
-    private DocumentConverterFactory documentConverterFactory;
-    @Mock
-    private DocumentConverter converter;
+    @Mock APIAccessor apiAccessor;
+    
+    @Mock EngineExecutionContext engineExecutionContext;
+    
+    @Mock ProcessAPI processAPI;
+
+    @Mock DocumentConverterFactory documentConverterFactory;
+
+    @Mock DocumentConverter converter;
 
     private DocumentConverterConnector connector;
 
-    @Before
+    @BeforeEach
     public void before() {
+        when(documentConverterFactory.newConverter(any(InputStream.class), anyString(), anyString())).thenReturn(converter);
         connector = spy(new DocumentConverterConnector(documentConverterFactory));
         doReturn(apiAccessor).when(connector).getAPIAccessor();
         doReturn(engineExecutionContext).when(connector).getExecutionContext();
@@ -71,7 +70,7 @@ public class DocumentConverterConnectorTest {
     }
 
     @Test
-    public void should_retrieve_document_from_sourceDocument_parameter() throws Exception {
+    void should_retrieve_document_from_sourceDocument_parameter() throws Exception {
         //given
         final DocumentImpl document = new DocumentImpl();
         document.setContentMimeType("theMimeType");
@@ -79,13 +78,14 @@ public class DocumentConverterConnectorTest {
         document.setContentStorageId("TheStorageID");
         final byte[] content = new byte[] { 4, 5, 6 };
         final byte[] contentAfter = { 1, 2, 3 };
-        when(documentConverterFactory.newConverter(any(ByteArrayInputStream.class), anyString(), anyString())).thenReturn(converter);
+        
         when(converter.convert()).thenReturn(contentAfter);
         doReturn(document).when(processAPI).getLastDocument(processInstanceId, "documentName");
         doReturn(content).when(processAPI).getDocumentContent("TheStorageID");
 
         final HashMap<String, Object> parameters = new HashMap<String, Object>();
         parameters.put(DocumentConverterConnector.SOURCE_DOCUMENT, "documentName");
+        parameters.put(DocumentConverterConnector.ENCODING, "UTF-8");
 
         connector.setInputParameters(parameters);
         connector.validateInputParameters();
@@ -100,7 +100,7 @@ public class DocumentConverterConnectorTest {
     }
 
     @Test
-    public void should_throw_a_ConnectorException_when_convertion_failed() throws Exception {
+    void should_throw_a_ConnectorException_when_convertion_failed() throws Exception {
         //given
         final DocumentImpl document = new DocumentImpl();
         document.setContentMimeType("theMimeType");
@@ -108,37 +108,35 @@ public class DocumentConverterConnectorTest {
         document.setContentStorageId("TheStorageID");
         final byte[] content = new byte[] { 4, 5, 6 };
         final byte[] contentAfter = { 1, 2, 3 };
-        when(documentConverterFactory.newConverter(any(ByteArrayInputStream.class), anyString(), anyString())).thenReturn(converter);
         when(converter.convert()).thenReturn(contentAfter);
         doReturn(document).when(processAPI).getLastDocument(processInstanceId, "documentName");
         doReturn(content).when(processAPI).getDocumentContent("TheStorageID");
 
         final HashMap<String, Object> parameters = new HashMap<String, Object>();
         parameters.put(DocumentConverterConnector.SOURCE_DOCUMENT, "documentName");
+        parameters.put(DocumentConverterConnector.ENCODING, "UTF-8");
 
         connector.setInputParameters(parameters);
         connector.validateInputParameters();
 
         doThrow(new XDocReportException("")).when(converter).convert();
 
-        expectedException.expect(ConnectorException.class);
-
         //when
-        connector.execute();
+        assertThrows(ConnectorException.class, () -> connector.execute());
     }
 
     @Test
-    public void should_throw_a_ConnectorException_when_document_not_found() throws Exception {
+    void should_throw_a_ConnectorException_when_document_not_found() throws Exception {
         //given
         doThrow(new DocumentNotFoundException("")).when(processAPI).getLastDocument(anyLong(), anyString());
         final HashMap<String, Object> parameters = new HashMap<String, Object>();
         parameters.put(DocumentConverterConnector.SOURCE_DOCUMENT, "documentName");
+        parameters.put(DocumentConverterConnector.ENCODING, "UTF-8");
         connector.setInputParameters(parameters);
 
-        expectedException.expect(ConnectorException.class);
 
         //when
-        connector.execute();
+        assertThrows(ConnectorException.class, () -> connector.execute());
     }
 
 }
