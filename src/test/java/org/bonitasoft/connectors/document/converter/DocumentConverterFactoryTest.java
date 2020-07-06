@@ -6,20 +6,19 @@
  * Bonitasoft, 32 rue Gustave Eiffel – 38000 Grenoble
  * or Bonitasoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
  */
-package com.bonitasoft.connectors.document.converter;
+package org.bonitasoft.connectors.document.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.ByteArrayInputStream;
 
+import org.bonitasoft.connectors.document.converter.core.DocToHTMLConverter;
+import org.bonitasoft.connectors.document.converter.core.DocToPDFConverter;
+import org.bonitasoft.connectors.document.converter.core.DocumentConverter;
+import org.bonitasoft.connectors.document.converter.core.DocumentConverterFactory;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import com.bonitasoft.connectors.document.converter.core.DocToHTMLConverter;
-import com.bonitasoft.connectors.document.converter.core.DocToPDFConverter;
-import com.bonitasoft.connectors.document.converter.core.DocumentConverter;
-import com.bonitasoft.connectors.document.converter.core.DocumentConverterFactory;
 
 public class DocumentConverterFactoryTest {
 

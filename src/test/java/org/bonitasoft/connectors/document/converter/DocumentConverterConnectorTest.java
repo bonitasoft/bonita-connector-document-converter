@@ -6,18 +6,23 @@
  * Bonitasoft, 32 rue Gustave Eiffel – 38000 Grenoble
  * or Bonitasoft US, 51 Federal Street, Suite 305, San Francisco, CA 94107
  */
-package com.bonitasoft.connectors.document.converter;
+package org.bonitasoft.connectors.document.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bonitasoft.connectors.document.converter.core.DocumentConverter;
+import org.bonitasoft.connectors.document.converter.core.DocumentConverterFactory;
 import org.bonitasoft.engine.api.APIAccessor;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.bpm.document.DocumentNotFoundException;
@@ -33,8 +38,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.bonitasoft.connectors.document.converter.core.DocumentConverter;
-import com.bonitasoft.connectors.document.converter.core.DocumentConverterFactory;
 import fr.opensagres.xdocreport.core.XDocReportException;
 
 @RunWith(MockitoJUnitRunner.class)
