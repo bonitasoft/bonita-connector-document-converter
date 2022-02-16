@@ -47,6 +47,7 @@
 
         <!-- Connector dependencies -->
         <opensagres.version>2.0.2</opensagres.version>
+        <apache-collection-commons-collections.version>4.4</apache-collection-commons-collections.version>
 
         <!-- Test -->
         <junit-jupiter-engine.version>5.8.1</junit-jupiter-engine.version>
@@ -69,7 +70,7 @@
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.2.0</maven-source-plugin.version>
         <apache-collection-commons-text.version>1.9</apache-collection-commons-text.version>
-        <apache-collection-commons-collections.version>4.4</apache-collection-commons-collections.version>
+        <apache-collection-commons-collections.version>3.2.2</apache-collection-commons-collections.version>
 
         <!-- Sonar -->
         <sonar.projectKey>bonitasoft_bonita-connector-document-converter</sonar.projectKey>
@@ -154,13 +155,8 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-text</artifactId>
-            <version>${apache-collection-commons-text.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
             <version>${apache-collection-commons-collections.version}</version>
         </dependency>
 
