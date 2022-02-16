@@ -54,8 +54,8 @@
         <assertj-core.version>3.16.1</assertj-core.version>
         <mockito-core.version>3.3.3</mockito-core.version>
         <logback-classic.version>1.2.3</logback-classic.version>
-        <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
-        <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
+        <sonar-maven-plugin.version>3.9.1.2185</sonar-maven-plugin.version>
 
         <!-- Maven plugins -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -68,6 +68,8 @@
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.2.0</maven-source-plugin.version>
+        <apache-collection-commons-text.version>1.9</apache-collection-commons-text.version>
+        <apache-collection-commons-collections.version>4.4</apache-collection-commons-collections.version>
 
         <!-- Sonar -->
         <sonar.projectKey>bonitasoft_bonita-connector-document-converter</sonar.projectKey>
@@ -154,10 +156,12 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
+            <version>${apache-collection-commons-text.version}</version>
         </dependency>
         <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${apache-collection-commons-collections.version}</version>
         </dependency>
 
         <!-- Tests -->
