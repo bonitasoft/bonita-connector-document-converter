@@ -46,7 +46,7 @@
         <bonita.engine.version>7.14.0</bonita.engine.version>
 
         <!-- Connector dependencies -->
-        <opensagres.version>2.0.3</opensagres.version>
+        <opensagres.version>2.0.4</opensagres.version>
         <apache-collection-commons-collections.version>4.4</apache-collection-commons-collections.version>
 
         <!-- Test -->
