@@ -5,14 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2.0 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package org.bonitasoft.connectors.document.converter.core;
 
@@ -21,8 +19,6 @@ import java.io.InputStream;
 import java.util.Objects;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
-
-import com.lowagie.text.pdf.PdfWriter;
 
 import fr.opensagres.poi.xwpf.converter.pdf.PdfOptions;
 import fr.opensagres.xdocreport.converter.ConverterTypeTo;
@@ -33,7 +29,6 @@ import fr.opensagres.xdocreport.core.document.DocumentKind;
 import fr.opensagres.xdocreport.core.io.XDocArchive;
 import fr.opensagres.xdocreport.document.IXDocReport;
 import fr.opensagres.xdocreport.document.registry.XDocReportRegistry;
-import fr.opensagres.xdocreport.openpdf.extension.IPdfWriterConfiguration;
 
 public abstract class AbstractDocumentConverter implements DocumentConverter {
 
@@ -50,10 +45,11 @@ public abstract class AbstractDocumentConverter implements DocumentConverter {
 
     @Override
     public byte[] convert() throws IOException, XDocReportException {
-        var documentArchive = XDocArchive.readZip( inputStream );
+        var documentArchive = XDocArchive.readZip(inputStream);
         final IXDocReport report = XDocReportRegistry.getRegistry().createReport(documentArchive);
         try (final ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            var options = Options.getTo(getOutputType()).via(converterImplementation(report)).subOptions(getPDFOptions());
+            var options = Options.getTo(getOutputType()).via(converterImplementation(report))
+                    .subOptions(getPDFOptions());
             var converter = report.getConverter(options);
             converter.convert(XDocArchive.getInputStream(documentArchive), out, options);
             return out.toByteArray();
@@ -71,7 +67,8 @@ public abstract class AbstractDocumentConverter implements DocumentConverter {
     protected abstract ConverterTypeTo getOutputType();
 
     private ConverterTypeVia converterImplementation(final IXDocReport report) {
-        return Objects.equals(report.getKind(), DocumentKind.ODT.name()) ? ConverterTypeVia.ODFDOM : converterTypeForDocx();
+        return Objects.equals(report.getKind(), DocumentKind.ODT.name()) ? ConverterTypeVia.ODFDOM
+                : converterTypeForDocx();
     }
 
     protected abstract ConverterTypeVia converterTypeForDocx();

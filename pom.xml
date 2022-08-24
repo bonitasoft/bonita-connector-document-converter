@@ -117,7 +117,7 @@
         </dependency>
         <dependency>
             <groupId>fr.opensagres.xdocreport</groupId>
-            <artifactId>fr.opensagres.poi.xwpf.converter.pdf.openpdf</artifactId>
+            <artifactId>fr.opensagres.xdocreport.itext.extension</artifactId>
             <version>${opensagres.version}</version>
         </dependency>
         <dependency>
@@ -128,12 +128,6 @@
                 <exclusion>
                     <artifactId>commons-codec</artifactId>
                     <groupId>commons-codec</groupId>
-                </exclusion>
-                <exclusion>
-                    <groupId>fr.opensagres.xdocreport</groupId>
-                    <artifactId>
-                        fr.opensagres.xdocreport.itext.extension
-                    </artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -150,10 +144,6 @@
                 <exclusion>
                     <groupId>xml-apis</groupId>
                     <artifactId>xml-apis</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.lowagie</groupId>
-                    <artifactId>itext</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
