@@ -117,7 +117,7 @@
         </dependency>
         <dependency>
             <groupId>fr.opensagres.xdocreport</groupId>
-            <artifactId>fr.opensagres.xdocreport.itext.extension</artifactId>
+            <artifactId>fr.opensagres.poi.xwpf.converter.pdf.openpdf</artifactId>
             <version>${opensagres.version}</version>
         </dependency>
         <dependency>
@@ -129,12 +129,13 @@
                     <artifactId>commons-codec</artifactId>
                     <groupId>commons-codec</groupId>
                 </exclusion>
+                <exclusion>
+                    <groupId>fr.opensagres.xdocreport</groupId>
+                    <artifactId>
+                        fr.opensagres.xdocreport.itext.extension
+                    </artifactId>
+                </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>fr.opensagres.xdocreport</groupId>
-            <artifactId>fr.opensagres.xdocreport.template.velocity</artifactId>
-            <version>${opensagres.version}</version>
         </dependency>
         <dependency>
             <groupId>fr.opensagres.xdocreport</groupId>
@@ -149,6 +150,10 @@
                 <exclusion>
                     <groupId>xml-apis</groupId>
                     <artifactId>xml-apis</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.lowagie</groupId>
+                    <artifactId>itext</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -387,7 +392,7 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
-
+    
     <scm>
         <developerConnection>scm:git:git@github.com/bonitasoft/bonita-connector-document-converter.git</developerConnection>
         <connection>scm:git:git@github.com/bonitasoft/bonita-connector-document-converter.git</connection>

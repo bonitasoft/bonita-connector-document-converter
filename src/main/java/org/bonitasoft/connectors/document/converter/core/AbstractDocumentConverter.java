@@ -22,23 +22,25 @@ import java.util.Objects;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
 
-import fr.opensagres.odfdom.converter.pdf.PdfOptions;
+import com.lowagie.text.pdf.PdfWriter;
+
+import fr.opensagres.poi.xwpf.converter.pdf.PdfOptions;
 import fr.opensagres.xdocreport.converter.ConverterTypeTo;
 import fr.opensagres.xdocreport.converter.ConverterTypeVia;
 import fr.opensagres.xdocreport.converter.Options;
 import fr.opensagres.xdocreport.core.XDocReportException;
 import fr.opensagres.xdocreport.core.document.DocumentKind;
+import fr.opensagres.xdocreport.core.io.XDocArchive;
 import fr.opensagres.xdocreport.document.IXDocReport;
 import fr.opensagres.xdocreport.document.registry.XDocReportRegistry;
-import fr.opensagres.xdocreport.template.IContext;
-import fr.opensagres.xdocreport.template.TemplateEngineKind;
+import fr.opensagres.xdocreport.openpdf.extension.IPdfWriterConfiguration;
 
 public abstract class AbstractDocumentConverter implements DocumentConverter {
 
     private final InputStream inputStream;
     private final String encoding;
 
-    public AbstractDocumentConverter(final InputStream inputStream, String encoding) {
+    protected AbstractDocumentConverter(final InputStream inputStream, String encoding) {
         if (inputStream == null) {
             throw new IllegalArgumentException("Source document InputStream cannot be null");
         }
@@ -48,12 +50,12 @@ public abstract class AbstractDocumentConverter implements DocumentConverter {
 
     @Override
     public byte[] convert() throws IOException, XDocReportException {
-        final IXDocReport report = XDocReportRegistry.getRegistry().loadReport(
-                inputStream, TemplateEngineKind.Velocity);
-        final IContext context = report.createContext();
+        var documentArchive = XDocArchive.readZip( inputStream );
+        final IXDocReport report = XDocReportRegistry.getRegistry().createReport(documentArchive);
         try (final ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            report.convert(context,
-                    Options.getTo(getOutputType()).via(converterImplementation(report)).subOptions(getPDFOptions()), out);
+            var options = Options.getTo(getOutputType()).via(converterImplementation(report)).subOptions(getPDFOptions());
+            var converter = report.getConverter(options);
+            converter.convert(XDocArchive.getInputStream(documentArchive), out, options);
             return out.toByteArray();
         }
     }

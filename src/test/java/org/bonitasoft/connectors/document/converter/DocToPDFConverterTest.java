@@ -23,6 +23,15 @@ class DocToPDFConverterTest {
 
         assertThat(content).isNotEmpty();
     }
+    
+    @Test
+    void should_convert_docx_to_pdf2() throws Exception {
+        final DocToPDFConverter docxToPDFConverter = new DocToPDFConverter(DocToPDFConverterTest.class.getResourceAsStream("/QuoteRequestTemplate.docx"), "utf-8");
+
+        final byte[] content = docxToPDFConverter.convert();
+
+        assertThat(content).isNotEmpty();
+    }
 
     @Test
     void should_convert_odt_to_pdf() throws Exception {
