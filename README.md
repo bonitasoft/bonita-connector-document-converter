@@ -11,7 +11,7 @@ Implementation is based on [XDocReport](https://github.com/opensagres/xdocreport
 
 ## Bonita compatibility
 
-[v2.1.0](https://github.com/bonitasoft/bonita-connector-document-converter/releases/2.1.0) is compatible with Bonita version 7.11.x and above
+[v2.3.0](https://github.com/bonitasoft/bonita-connector-document-converter/releases/2.3.0) is compatible with Bonita version 7.11.x and above
 
 ## Build
 
