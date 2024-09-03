@@ -43,14 +43,14 @@
         <document-converter.main-class>org.bonitasoft.connectors.document.converter.DocumentConverterConnector</document-converter.main-class>
 
         <!-- Bonita -->
-        <bonita.engine.version>7.14.0</bonita.engine.version>
+        <bonita.engine.version>8.0.0</bonita.engine.version>
 
         <!-- Connector dependencies -->
-        <opensagres.version>2.0.4</opensagres.version>
+        <opensagres.version>2.1.0</opensagres.version>
         <apache-collection-commons-collections.version>4.4</apache-collection-commons-collections.version>
 
         <!-- Test -->
-        <junit-jupiter-engine.version>5.10.1</junit-jupiter-engine.version>
+        <junit-jupiter.version>5.11.0</junit-jupiter.version>
         <wiremock.version>2.26.3</wiremock.version>
         <assertj-core.version>3.25.2</assertj-core.version>
         <mockito-core.version>5.11.0</mockito-core.version>
@@ -61,12 +61,12 @@
         <!-- Maven plugins -->
         <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
-        
+        <maven-gpg-plugin.version>3.2.5</maven-gpg-plugin.version>
         <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
         <groovy-maven-plugin.version>2.1.1</groovy-maven-plugin.version>
         <groovy.version>3.0.21</groovy.version>
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
-        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+        <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
         <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
 
@@ -79,6 +79,13 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit-jupiter.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.bonitasoft.runtime</groupId>
                 <artifactId>bonita-runtime-bom</artifactId>
                 <version>${bonita.engine.version}</version>
@@ -88,6 +95,16 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
                 <scope>provided</scope>
             </dependency>
         </dependencies>
@@ -157,13 +174,11 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit-jupiter-engine.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit-jupiter-engine.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -352,7 +367,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.1.0</version>
+                        <version>${maven-gpg-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
