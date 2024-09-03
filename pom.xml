@@ -5,7 +5,7 @@
 
     <groupId>org.bonitasoft.connectors</groupId>
     <artifactId>bonita-connector-document-converter</artifactId>
-    <version>2.4.0-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
 
     <name>Office Document Converter Connector</name>
     <description>Office document converter connector for Bonita</description>
@@ -30,7 +30,7 @@
 
     <properties>
         <!-- Maven -->
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.build.timestamp.format>yyyy.MM.dd-hh.mm</maven.build.timestamp.format>
@@ -43,11 +43,12 @@
         <document-converter.main-class>org.bonitasoft.connectors.document.converter.DocumentConverterConnector</document-converter.main-class>
 
         <!-- Bonita -->
-        <bonita.engine.version>8.0.0</bonita.engine.version>
+        <bonita.engine.version>10.0.0</bonita.engine.version>
 
         <!-- Connector dependencies -->
         <opensagres.version>2.1.0</opensagres.version>
         <apache-collection-commons-collections.version>4.4</apache-collection-commons-collections.version>
+        <xercesImpl.version>2.12.2</xercesImpl.version>
 
         <!-- Test -->
         <junit-jupiter.version>5.11.0</junit-jupiter.version>
@@ -107,6 +108,11 @@
                 <artifactId>log4j-core</artifactId>
                 <scope>provided</scope>
             </dependency>
+            <dependency>
+                <groupId>xerces</groupId>
+                <artifactId>xercesImpl</artifactId>
+                <version>${xercesImpl.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -116,7 +122,6 @@
             <artifactId>bonita-common</artifactId>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>fr.opensagres.xdocreport</groupId>
             <artifactId>fr.opensagres.xdocreport.document</artifactId>
