@@ -43,7 +43,7 @@
         <document-converter.main-class>org.bonitasoft.connectors.document.converter.DocumentConverterConnector</document-converter.main-class>
 
         <!-- Bonita -->
-        <bonita.engine.version>10.0.0</bonita.engine.version>
+        <bonita.engine.version>10.2.0</bonita.engine.version>
 
         <!-- Connector dependencies -->
         <opensagres.version>2.1.0</opensagres.version>
