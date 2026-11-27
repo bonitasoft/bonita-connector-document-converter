@@ -5,7 +5,7 @@
 
     <groupId>org.bonitasoft.connectors</groupId>
     <artifactId>bonita-connector-document-converter</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
 
     <name>Office Document Converter Connector</name>
     <description>Office document converter connector for Bonita</description>
@@ -43,7 +43,8 @@
         <document-converter.main-class>org.bonitasoft.connectors.document.converter.DocumentConverterConnector</document-converter.main-class>
 
         <!-- Bonita -->
-        <bonita.engine.version>10.0.0</bonita.engine.version>
+        <!-- TODO Bonita 12.0 GA: switch to 12.0.0 -->
+        <bonita-runtime.version>12.0-SNAPSHOT</bonita-runtime.version>
 
         <!-- Connector dependencies -->
         <opensagres.version>2.1.0</opensagres.version>
@@ -57,16 +58,18 @@
         <mockito-core.version>5.15.2</mockito-core.version>
         <logback-classic.version>1.2.13</logback-classic.version>
         <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
-        <sonar-maven-plugin.version>4.0.0.4121</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>5.0.0.4389</sonar-maven-plugin.version>
 
         <!-- Maven plugins -->
-        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
-        <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
-        <groovy-maven-plugin.version>2.1.1</groovy-maven-plugin.version>
-        <groovy.version>3.0.24</groovy.version>
-        <maven-surefire-plugin.version>3.5.1</maven-surefire-plugin.version>
+        <maven-assembly-plugin.version>3.8.0</maven-assembly-plugin.version>
+        <gmavenplus-plugin.version>5.1.0</gmavenplus-plugin.version>
+        <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
+
+        <!-- Groovy, used by the build scripts -->
+        <groovy.version>4.0.32</groovy.version>
         <central-maven-plugin.version>0.8.0</central-maven-plugin.version>
         <maven-javadoc-plugin.version>3.10.1</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
@@ -89,10 +92,13 @@
             <dependency>
                 <groupId>org.bonitasoft.runtime</groupId>
                 <artifactId>bonita-runtime-bom</artifactId>
-                <version>${bonita.engine.version}</version>
+                <version>${bonita-runtime.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- Logging facades provided by the Bonita runtime (slf4j-api 2.x, log4j-api 2.x): bundled in the
+                 connector (child-first classloader), they would not find the runtime logging backend.
+                 log4j-api is used by Apache POI. -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
@@ -103,6 +109,7 @@
                 <artifactId>log4j-api</artifactId>
                 <scope>provided</scope>
             </dependency>
+            <!-- Logging backend: never bundled (no dependency brings it today, this only guards against it) -->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-core</artifactId>
@@ -172,7 +179,6 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <!-- Tests -->
@@ -244,18 +250,6 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>org.codehaus.gmaven</groupId>
-                    <artifactId>groovy-maven-plugin</artifactId>
-                    <version>${groovy-maven-plugin.version}</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.codehaus.groovy</groupId>
-                            <artifactId>groovy</artifactId>
-                            <version>${groovy.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
@@ -308,8 +302,9 @@
 
         <plugins>
             <plugin>
-                <groupId>org.codehaus.gmaven</groupId>
-                <artifactId>groovy-maven-plugin</artifactId>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>${gmavenplus-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>generate-resources</phase>
@@ -317,10 +312,24 @@
                             <goal>execute</goal>
                         </goals>
                         <configuration>
-                            <source>${project.basedir}/src/script/dependencies-as-var.groovy</source>
+                            <scripts>
+                                <script>${project.basedir}/src/script/dependencies-as-var.groovy</script>
+                            </scripts>
                         </configuration>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.groovy</groupId>
+                        <artifactId>groovy</artifactId>
+                        <version>${groovy.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.groovy</groupId>
+                        <artifactId>groovy-xml</artifactId>
+                        <version>${groovy.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

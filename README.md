@@ -11,7 +11,13 @@ Implementation is based on [XDocReport](https://github.com/opensagres/xdocreport
 
 ## Bonita compatibility
 
-[v2.3.0](https://github.com/bonitasoft/bonita-connector-document-converter/releases/2.3.0) is compatible with Bonita version 7.11.x and above
+| Connector           | Bonita         | Java         |
+|---------------------|----------------|--------------|
+| 4.x (`master`)      | 12.0 and later | 17 and later |
+| [3.0.0](https://github.com/bonitasoft/bonita-connector-document-converter/releases/3.0.0) | 10.0 to 11.x | 17 and later |
+| [2.3.0](https://github.com/bonitasoft/bonita-connector-document-converter/releases/2.3.0) | 7.11 to 11.x | 11 and later |
+
+The connector definition (`document-converter` 1.0.2) and its inputs/outputs are unchanged.
 
 ## Build
 
