@@ -4,10 +4,10 @@
 
 - **Name**: Office Document Converter Connector
 - **Artifact**: `org.bonitasoft.connectors:bonita-connector-document-converter`
-- **Version**: 3.0.0-SNAPSHOT
-- **Description**: Bonita connector that converts office documents (DOCX, ODT) to PDF using the XDocReport/OpenSagres library.
+- **Version**: 4.0.0-SNAPSHOT
+- **Description**: Bonita connector that converts office documents (DOCX, ODT) to PDF using the XDocReport/OpenSagres library. Version 4.x targets Bonita 12+ (Jakarta EE) / Java 17; Bonita 10.0 - 11.x use 3.0.0, Bonita 7.11 - 9.x use 2.3.0.
 - **License**: GPL-2.0
-- **Tech stack**: Java 17, Maven, Bonita Engine 10.0.0, XDocReport 2.1.0 (fr.opensagres), JUnit 5, Mockito, AssertJ
+- **Tech stack**: Java 17, Maven, Bonita runtime 12.0 (`bonita-runtime-bom`), XDocReport 2.1.0 (fr.opensagres), JUnit 5, Mockito, AssertJ
 
 ## Build Commands
 
